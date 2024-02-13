@@ -12,14 +12,16 @@ def load_cnf():
     return cnf
 
 cnf = load_cnf()
-user = cnf['client']['user']
-password = cnf['client']['password']
 
 if not os.environ.get( 'TOOLFORGE' ):
     remote = 'localhost'
+    user = cnf['client']['user']
+    password = cnf['client']['password']
     port=3308
 else:
     remote = 'enwiki.analytics.db.svc.wikimedia.cloud'
+    user = os.environ.get( 'TOOL_DATABASE_USER' )
+    password = os.environ.get( 'TOOL_DATABASE_PASSWORD' )
     port =3306
 
 
