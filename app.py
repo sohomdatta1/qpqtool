@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect, send_file
 from db import get_conn
 from bleach import clean
 import json
@@ -6,6 +6,14 @@ from datetime import datetime, timedelta
 from redis_init import rediscl as r, REDIS_KEY_PREFIX
 
 app = Flask(__name__)
+
+@app.get('/')
+def main():
+    return redirect('/dyk')
+
+@app.get('/dyk')
+def dyk():
+    return send_file('./index.html')
 
 @app.get('/qpq/<path:username>')
 def qpq( username: str ):
@@ -29,7 +37,6 @@ def qpq( username: str ):
         GROUP BY page_title
         """, (int(offset), username, 'Did_you_know_nominations/%'))
         pages = cursor.fetchall()
-        print(len(pages))
         resp_json = cached_response
         for page in pages:
             resp_json.append('Template:' + page[0].decode())

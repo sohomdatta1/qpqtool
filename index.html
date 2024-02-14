@@ -1,0 +1,14 @@
+<h1>QPQ Checker</h1>
+<form>
+    <label for="username">Username: </label>
+    <input type="text" id="username" />
+    <button type="submit" id="submission">See DYK nominations</button>
+</form>
+<script>
+    document
+        .querySelector( '#submission' )
+        .addEventListener( 'click', (e) => {
+            e.preventDefault();
+            document.location.href = `/qpq/${document.querySelector( '#username' ).value}`
+        } )
+</script>
