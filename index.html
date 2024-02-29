@@ -1,14 +1,20 @@
 <h1>QPQ Checker</h1>
 <form>
+    <label for="dykdatatype">Type:</label>
+    <select id="dykdatatype">
+        <option value="qpq">QPQ</option>
+        <option value="credits">Credits</option>
+    </select>
     <label for="username">Username: </label>
     <input type="text" id="username" />
-    <button type="submit" id="submission">See DYK nominations</button>
+    <button type="submit" id="submission">Get information about user</button>
 </form>
 <script>
     document
         .querySelector( '#submission' )
         .addEventListener( 'click', (e) => {
             e.preventDefault();
-            document.location.href = `/qpq/${document.querySelector( '#username' ).value}`
+
+            document.location.href = `/${document.querySelector( '#dykdatatype' ).value}/${document.querySelector( '#username' ).value}`
         } )
 </script>
