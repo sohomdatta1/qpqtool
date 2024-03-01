@@ -18,6 +18,7 @@ def dyk():
 
 @app.get('/qpq/<path:username>')
 def qpq( username: str ):
+    username = username.replace('_', ' ')
     with get_redis_conn() as r:
         cached_val = r.get(REDIS_KEY_PREFIX + 'qpq' + username)
         if cached_val == None:
