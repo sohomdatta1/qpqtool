@@ -46,7 +46,7 @@ def qpq( username: str ):
                 resp_json.append('Template:' + page[0].decode())
             tmstmp = datetime.now().strftime("%Y%m%d%H%M%S")
             r.set(REDIS_KEY_PREFIX + 'qpq' + username, tmstmp + '|' + json.dumps(resp_json))
-            r.expire(REDIS_KEY_PREFIX + 'qpq' + username, timedelta(days=365 * 2))
+            r.expire(REDIS_KEY_PREFIX + 'qpq' + username, timedelta(days=30))
             if len(resp_json) == 0:
                 return '<h1>No DYK nominations found</h1>'
             
@@ -63,37 +63,26 @@ def qpq( username: str ):
 @app.get('/credits/<path:username>')
 def credits(username):
     username = username.replace(' ', '_')
-    with get_redis_conn() as r:
-        cached_val = r.get(REDIS_KEY_PREFIX + 'credits' + username)
-        if cached_val == None:
-            cached_response = []
-        else:
-            cached_response = json.loads( cached_val.split(b'|',1)[1] )
-        resp_json = []
-        if cached_response == []:
-            with get_conn().cursor() as cursor:
-                cursor.execute("""SELECT c.comment_text
-                FROM page p 
-                JOIN revision r ON p.page_id = r.rev_page
-                JOIN comment c ON r.rev_comment_id = c.comment_id
-                AND p.page_namespace = 3
-                AND p.page_title = %s
-                AND r.rev_actor = 24447
-                ORDER BY r.rev_timestamp;
-                """, (username))
-                comments = cursor.fetchall()
-                for comment in comments:
-                    try:
-                        page = re.search(r'Giving DYK credit for \[\[([^\]]+)\]\] on behalf of \[\[([^\]]+)\]\]', comment[0].decode()).groups()[0]
-                        resp_json.append(page)
-                    except Exception as _:
-                        print(_)
-                        pass
-        else:
-            resp_json = cached_response
-        tmstmp = datetime.now().strftime("%Y%m%d%H%M%S")
-        r.set(REDIS_KEY_PREFIX + 'credits' + username, tmstmp + '|' + json.dumps(resp_json))
-        r.expire(REDIS_KEY_PREFIX + 'credits' + username, timedelta(days=365 * 2))
+    resp_json = []
+    with get_conn().cursor() as cursor:
+        cursor.execute("""SELECT c.comment_text
+        FROM page p 
+        JOIN revision r ON p.page_id = r.rev_page
+        JOIN comment c ON r.rev_comment_id = c.comment_id
+        AND p.page_namespace = 3
+        AND p.page_title = %s
+        AND r.rev_actor = 24447
+        ORDER BY r.rev_timestamp;
+        """, (username))
+        comments = cursor.fetchall()
+        for comment in comments:
+            try:
+                page = re.search(r'Giving DYK credit for \[\[([^\]]+)\]\] on behalf of \[\[([^\]]+)\]\]', comment[0].decode()).groups()[0]
+                resp_json.append(page)
+            except Exception as _:
+                print(_)
+                pass
+        
         if len(resp_json) == 0:
             return '<h1>No DYK nominations found</h1>'
         
