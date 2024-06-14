@@ -19,10 +19,10 @@ def init_db():
                     rev_timestamp TIMESTAMP,
                     PRIMARY KEY (rev_actor, page_title)
                     );''')
-        cursor.execute('CREATE INDEX rev_actor ON noms(rev_actor);')
-        cursor.execute('CREATE INDEX page_title ON noms(page_title);')
-        cursor.execute('CREATE INDEX rev_timestamp ON noms(rev_timestamp);')
-        cursor.execute('CREATE INDEX rev_actor_page_title ON noms(rev_actor, page_title);')
+        cursor.execute('CREATE INDEX rev_actor_index ON noms(rev_actor);')
+        cursor.execute('CREATE INDEX page_title_index ON noms(page_title);')
+        cursor.execute('CREATE INDEX rev_timestamp_index ON noms(rev_timestamp);')
+        cursor.execute('CREATE INDEX rev_actor_page_title_index ON noms(rev_actor, page_title);')
         cursor.execute('CREATE TABLE IF NOT EXISTS `last_run` (job_name VARCHAR(255), last_updated TIMESTAMP);')
     initdbconn.close()
     
