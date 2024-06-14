@@ -48,7 +48,7 @@ def qpq( username: str ):
 def credits(username):
     username = username.replace(' ', '_')
     resp_json = []
-    with get_conn().cursor() as cursor:
+    with get_replica_conn().cursor() as cursor:
         cursor.execute("""SELECT c.comment_text
         FROM page p 
         JOIN revision r ON p.page_id = r.rev_page
