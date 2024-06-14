@@ -20,8 +20,8 @@ if not os.environ.get( 'TOOLFORGE' ):
     port=3308
 else:
     remote = 'enwiki.analytics.db.svc.wikimedia.cloud'
-    user = os.environ.get( 'TOOL_DATABASE_USER' )
-    password = os.environ.get( 'TOOL_DATABASE_PASSWORD' )
+    user = os.environ.get( 'TOOL_TOOLSDB_USER' )
+    password = os.environ.get( 'TOOL_TOOLSDB_PASSWORD' )
     port =3306
 
 
