@@ -16,9 +16,9 @@ def import_into_db():
         AND r.rev_timestamp > %s
         AND r.rev_parent_id = '0'
         AND p.page_is_redirect = '0'
-        AND p.page_title LIKE 'Did_you_know_nominations/%'
+        AND p.page_title LIKE %s
         ORDER BY r.rev_timestamp
-        """, (time_offset))
+        """, (time_offset, 'Did_you_know_nominations/%'))
         pages = cursor.fetchall()
         with get_tools_conn().cursor() as tools_cursor:
             for page in pages:
