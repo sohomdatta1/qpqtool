@@ -23,6 +23,8 @@ def import_into_db():
         with get_tools_conn().cursor() as tools_cursor:
             for page in pages:
                 tools_cursor.execute('INSERT IGNORE INTO noms (page_title, rev_actor, rev_timestamp) VALUES (%s, %s, %s)', page)
+            tools_cursor.execute('REPLACE INTO last_run (job_name, last_updated) VALUES ("import_into_db", NOW())')
+            tools_cursor.execute('COMMIT')
         return 'Imported ' + str(len(pages)) + ' rows'
 
 if __name__ == '__main__':

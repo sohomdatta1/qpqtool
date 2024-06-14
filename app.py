@@ -1,5 +1,5 @@
 from flask import Flask, redirect, send_file
-from replicadb import get_conn
+from replicadb import get_conn as get_replica_conn
 from bleach import clean
 import json
 from datetime import datetime, timedelta
