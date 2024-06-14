@@ -23,7 +23,7 @@ def init_db():
         cursor.execute('CREATE INDEX page_title ON noms(page_title);')
         cursor.execute('CREATE INDEX rev_timestamp ON noms(rev_timestamp);')
         cursor.execute('CREATE INDEX rev_actor_page_title ON noms(rev_actor, page_title);')
-        cursor.exeucute('CREATE TABLE IF NOT EXISTS `last_run` (job_name VARCHAR(255), last_updated TIMESTAMP);')
+        cursor.execute('CREATE TABLE IF NOT EXISTS `last_run` (job_name VARCHAR(255), last_updated TIMESTAMP);')
     initdbconn.close()
     
 def get_conn():
