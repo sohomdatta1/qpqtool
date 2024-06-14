@@ -28,7 +28,7 @@ def qpq( username: str ):
             pages = toolsdbcursor.fetchall()
             resp_json = []
             for page in pages:
-                resp_json.append('Template:' + page[0].decode())
+                resp_json.append('Template:' + page[0])
             if len(resp_json) == 0:
                 return '<h1>No DYK nominations found</h1>'
             
