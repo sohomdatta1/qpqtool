@@ -22,6 +22,7 @@ def import_into_db():
         pages = cursor.fetchall()
         with get_tools_conn().cursor() as tools_cursor:
             for page in pages:
+                print('Adding to DB', page)
                 tools_cursor.execute('INSERT IGNORE INTO noms (page_title, rev_actor, rev_timestamp) VALUES (%s, %s, %s)', page)
             tools_cursor.execute('REPLACE INTO last_run (job_name, last_updated) VALUES ("import_into_db", NOW())')
             tools_cursor.execute('COMMIT')
