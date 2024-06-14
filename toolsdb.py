@@ -27,5 +27,7 @@ def init_db():
     initdbconn.close()
     
 def get_conn():
+    print(config)
+    print(f'{config["username"]}__qpqtool_p')
     dbconn = sql.connections.Connection(user=config['username'], password=config['password'], host='tools.db.svc.wikimedia.cloud', database=f'{config["username"]}__qpqtool_p')
     return dbconn
