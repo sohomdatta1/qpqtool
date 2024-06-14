@@ -24,6 +24,8 @@ def qpq( username: str ):
         with get_replica_conn().cursor() as replicacursor:
             replicacursor.execute('SELECT * FROM actor WHERE actor_name = %s;', username)
             actor = replicacursor.fetchone()
+            if not actor:
+                return '<h1>No username matching that value found</h1>'
             toolsdbcursor.execute('SELECT page_title FROM noms WHERE rev_actor = %s;', actor[0])
             pages = toolsdbcursor.fetchall()
             resp_json = []

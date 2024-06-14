@@ -1,5 +1,5 @@
-- name: "period-db-import"
-  command: "period-db-import"
+- name: "periodic-db-import"
+  command: "periodic-db-import"
   schedule: "*/15 * * * *"
   emails: all
   image: tool-qpqtool/tool-qpqtool:latest
