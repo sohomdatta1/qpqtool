@@ -9,7 +9,7 @@ def delete_all_data_do_not_use_in_prod():
         cursor.execute('DROP TABLE noms;')
 
 def init_db():
-    initdbconn = sql.connections.Connection(user=config['username'], password=config['password'], host=config['host'])
+    initdbconn = sql.connections.Connection(user=config['username'], password=config['password'], host='tools.db.svc.wikimedia.cloud')
     with initdbconn.cursor() as cursor:
         cursor.execute(f'CREATE DATABASE IF NOT EXISTS {config["username"]}__qpqtool_p;')
         cursor.execute(f'USE {config["username"]}__qpqtool_p')
